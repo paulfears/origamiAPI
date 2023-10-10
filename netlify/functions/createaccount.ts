@@ -13,8 +13,7 @@ async function postData(url, data = {}) {
         "Authorization": (process.env.STELLARIDAPIKEY as string),
         "accept": "application/json"
       },
-      redirect: "follow", // manual, *follow, error
-      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      redirect: "follow", // manual, *follow, error// no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify(data), // body data type must match "Content-Type" header
     });
     console.log("response.ok is: ");
