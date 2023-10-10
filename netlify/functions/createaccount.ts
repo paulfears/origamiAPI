@@ -40,7 +40,7 @@ async function postData(url, data = {}) {
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
     // your server-side functionality
     const body = JSON.parse(event.body);
-    const test = Buffer.from("createaccount");
+    const test = Buffer.from(Buffer.from("createaccount").toString());
     console.log("test");
     console.log(test);
     console.log("sig");
