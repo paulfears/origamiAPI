@@ -2,14 +2,16 @@ import {Keypair} from 'stellar-base';
 import { returnResponse } from '../../functionUtils';
 async function postData(url, data = {}) {
     // Default options are marked with *
-
+    console.log("token is");
+    console.log(process.env.STELLARIDAPIKEY);
     const response = await fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
       headers: {
         "Content-Type": "application/json",
-        "Authorization": (process.env.STELLARIDAPIKEY as string)
+        "Authorization": (process.env.STELLARIDAPIKEY as string),
+        "accept": "application/json"
       },
       redirect: "follow", // manual, *follow, error
       referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
