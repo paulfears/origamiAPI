@@ -15,6 +15,9 @@ async function postData(url, data = {}) {
       referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify(data), // body data type must match "Content-Type" header
     });
+    console.log("response.ok is: ");
+    console.log(response.ok);
+    console.log(response.body);
     return await response.json(); // parses JSON response into native JavaScript objects
   }
 
@@ -33,9 +36,13 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     const address = body.address;
     const verifier = Keypair.fromPublicKey(body.address);
     if(!verifier.verify(test, Buffer.from(proof))){
+        console.log("failed verification");
         returnResponse(403, {"error":"proof did not match", "ok":false, "code":403})
     }
-
+    console.log("body username is: ");
+    console.log(body.username);
+    console.log("body.address is: ")
+    console.log(body.address);
     const params = {
         "username": body.username,
         "domain": "metastellar.io",
@@ -44,6 +51,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
       }
     const url = "https://stellarid.io/api/addresses"
     const response = await postData(url, params)
+    console.log("response is");
     console.log(response);
     const data = response;
       return {'statusCode': 200,
