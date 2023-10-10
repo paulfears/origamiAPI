@@ -44,6 +44,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
       }
     const url = "https://stellarid.io/api/addresses"
     const response = await postData(url, params)
+    console.log(response);
     const data = response;
       return {'statusCode': 200,
           'headers': {
