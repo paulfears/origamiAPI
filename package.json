@@ -1,0 +1,13 @@
+{
+  "name": "metaStellarNetlifyFunctions",
+  "version": "0.0.1",
+  "description": "netlifyfunctionsgroup",
+  "main": "index.js",
+  "repository": "https://github.com/paulfears/metaStellarNetlifyFunctions.git",
+  "author": "<paulrfears@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "@netlify/functions": "^2.2.1"
+  }
+}
