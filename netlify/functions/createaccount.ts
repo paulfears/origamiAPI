@@ -18,7 +18,7 @@ async function postData(url, data = {}) {
     console.log("response.ok is: ");
     console.log(response.ok);
     console.log(response.body);
-    return await response.json(); // parses JSON response into native JavaScript objects
+    return await response.text(); // parses JSON response into native JavaScript objects
   }
 
 /**
@@ -47,7 +47,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
         "username": body.username,
         "domain": "metastellar.io",
         "account_id": body.address,
-        "memo_type": "none",
+        "memo_type": "None"
       }
     const url = "https://stellarid.io/api/addresses"
     const response = await postData(url, params)
