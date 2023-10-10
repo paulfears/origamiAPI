@@ -17,8 +17,15 @@ async function postData(url, data = {}) {
     });
     console.log("response.ok is: ");
     console.log(response.ok);
+    console.log("response body is");
     console.log(response.body);
-    return await response.text(); // parses JSON response into native JavaScript objects
+    console.log("response status is");
+    console.log(response.status);
+    console.log("status text is");
+    console.log(response.statusText);
+    const output = await response.text(); // parses JSON response into native JavaScript objects
+    console.log("output is");
+    console.log(output);
   }
 
 /**
