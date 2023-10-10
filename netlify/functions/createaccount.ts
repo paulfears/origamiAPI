@@ -42,7 +42,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     const body = JSON.parse(event.body);
     const test = Buffer.from("createaccount");
     console.log("test");
-    console.log(text);
+    console.log(test);
     console.log("sig");
     console.log(body.proof);
     console.log("sig buffer");
