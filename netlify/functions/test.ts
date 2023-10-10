@@ -11,7 +11,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": 'GET, POST, PUT, DELETE, OPTIONS'
         },
-        'body': json_data
+        'body': JSON.stringify(json_data)
     }    
 };
 
