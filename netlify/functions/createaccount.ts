@@ -41,12 +41,22 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     // your server-side functionality
     const body = JSON.parse(event.body);
     const test = Buffer.from("createaccount");
+    console.log("test");
+    console.log(text);
+    console.log("sig");
+    console.log(body.proof);
+    console.log("sig buffer");
+    console.log(Buffer.from(body.proof));
     const proof = body.proof;
     const address = body.address;
-    const verifier = Keypair.fromPublicKey(body.address);
+    
+    const verifier = Keypair.fromPublicKey(address);
+    console.log("verifer is");
+    console.log(verifier);
+    console.log("running verifier");
     if(!verifier.verify(test, Buffer.from(proof))){
         console.log("failed verification");
-        returnResponse(403, {"error":"proof did not match", "ok":false, "code":403})
+        return returnResponse(403, {"error":"proof did not match", "ok":false, "code":403})
     }
     console.log("body username is: ");
     console.log(body.username);
