@@ -1,10 +1,11 @@
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
     // your server-side functionality
     const proof = event.body.proof;
-
+    console.log("proof");
     const json_data = {
       "hello":"world",
-      "postproof": proof
+      "postproof": proof,
+      "body":event.body
     }
       return {'statusCode': 200,
           'headers': {
