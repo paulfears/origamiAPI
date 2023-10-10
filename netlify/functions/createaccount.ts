@@ -47,7 +47,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
         "username": body.username,
         "domain": "metastellar.io",
         "account_id": body.address,
-        "memo_type": "None",
+        "memo_type": "text",
         "memo": "string"
       }
     const url = "https://stellarid.io/api/addresses"
