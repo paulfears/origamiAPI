@@ -47,7 +47,8 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
         "username": body.username,
         "domain": "metastellar.io",
         "account_id": body.address,
-        "memo_type": "None"
+        "memo_type": "None",
+        "memo": "string"
       }
     const url = "https://stellarid.io/api/addresses"
     const response = await postData(url, params)
