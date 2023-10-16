@@ -27,6 +27,7 @@ async function postData(url, data = {}) {
     const output = await response.text(); // parses JSON response into native JavaScript objects
     console.log("output is");
     console.log(output);
+    return output;
   }
 
 /**
@@ -66,7 +67,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
         "domain": "https://metastellar.io",
         "account_id": body.address,
       }
-    const url = "https://stellarid.io/api/addresses"
+    const url = "https://stellarid.io/api/addresses/"
     const response = await postData(url, params)
     console.log("response is");
     console.log(response);
