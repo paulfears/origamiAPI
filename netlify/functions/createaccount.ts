@@ -1,8 +1,8 @@
 import {Keypair} from 'stellar-base';
 import { returnResponse } from '../../functionUtils';
 import nacl from 'tweetnacl';
- import { Handler, HandlerEvent, HandlerContext } from '@netlify/functions';import { json } from 'stream/consumers';
-}
+import { Handler, HandlerEvent, HandlerContext } from '@netlify/functions';import { json } from 'stream/consumers';
+
 
 
 
