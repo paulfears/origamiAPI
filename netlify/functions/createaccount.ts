@@ -76,9 +76,15 @@ function handleAuth(auth:auth, testKey):boolean{
 
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
     // your server-side functionality
-    const body = JSON.parse(event.body as string);
-    const address = body.address;
 
+    console.log(event);
+    console.log(event.body);
+    console.log("about to parse body");
+    const body = JSON.parse(event.body as string);
+    console.log(body);
+    const address = body.address;
+    console.log("address is");
+    console.log(address);
 
 
     if(!handleAuth(body.auth as auth, 'createaccount')){
