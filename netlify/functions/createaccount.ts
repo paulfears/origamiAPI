@@ -95,6 +95,10 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     const url = "https://stellarid.io/api/addresses/"
     const data = await postData(url, params)
     return {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": 'GET, POST, PUT, DELETE, OPTIONS'
+        },
       body: JSON.stringify(data),
       statusCode: 200,
     }
