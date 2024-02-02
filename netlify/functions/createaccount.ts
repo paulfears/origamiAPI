@@ -50,12 +50,12 @@ interface auth{
   proof:string //signed item 
 }
 function handleAuth(auth:auth, testKey):boolean{
-  function verifySig(data, signature, publicKey):boolean{
-    data = Buffer.from(data);
-    data = new Uint8Array(data.toJSON().data);
-    signature = new Uint8Array(signature.toJSON().data);
-    publicKey = new Uint8Array(publicKey.toJSON().data);
-    return nacl.sign.detached.verify(data, signature, publicKey);
+  function verifySig(data:Buffer, signature:string, publicKey:string):boolean{
+    const signatureBuf = Buffer.from(signature, 'hex');
+    const publicKeyBuf = Buffer.from(publicKey, 'hex');
+    const uIntsignature = new Uint8Array(signatureBuf.toJSON().data);
+    const uIntpublicKey = new Uint8Array(publicKeyBuf.toJSON().data);
+    return nacl.sign.detached.verify(data, uIntsignature, uIntpublicKey);
   };
   function prepairTest(data:string):Buffer{
     const safty = Buffer.from("__challenge__", 'hex');
