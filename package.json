@@ -9,6 +9,8 @@
   "private": false,
   "dependencies": {
     "@netlify/functions": "^2.2.1",
+    "@types/node": "^20.11.16",
+    "mongodb": "^6.3.0",
     "stellar-base": "^9.0.0"
   }
 }
