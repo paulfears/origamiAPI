@@ -51,11 +51,15 @@ interface auth{
 }
 function handleAuth(auth:auth, testKey):boolean{
   function verifySig(data:Buffer, signature:string, publicKey:string):boolean{
+    console.log("verifying sig");
     const signatureBuf = Buffer.from(signature, 'hex');
     const publicKeyBuf = Buffer.from(publicKey, 'hex');
+    console.log(publicKeyBuf);
+    console.log(signatureBuf);
     const uIntsignature = new Uint8Array(signatureBuf.toJSON().data);
     const uIntpublicKey = new Uint8Array(publicKeyBuf.toJSON().data);
-    return nacl.sign.detached.verify(data, uIntsignature, uIntpublicKey);
+    const uIntdata = new Uint8Array(data.toJSON().data);
+    return nacl.sign.detached.verify(uIntdata, uIntsignature, uIntpublicKey);
   };
   function prepairTest(data:string):Buffer{
     const safty = Buffer.from("__challenge__", 'hex');
