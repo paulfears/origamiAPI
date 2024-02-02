@@ -71,6 +71,8 @@ function handleAuth(auth:auth, testKey):boolean{
       return prepaired;
   }
   const test = prepairTest(testKey);
+  console.log("test is");
+  console.log(test);
   return verifySig(test, auth.proof, auth.pk);
 
 }
