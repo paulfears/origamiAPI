@@ -1,7 +1,8 @@
 import {Keypair} from 'stellar-base';
 import { returnResponse } from '../../functionUtils';
 import nacl from 'tweetnacl';
- import { Handler, HandlerEvent, HandlerContext } from '@netlify/functions';}
+ import { Handler, HandlerEvent, HandlerContext } from '@netlify/functions';import { json } from 'stream/consumers';
+}
 
 
 
@@ -42,41 +43,52 @@ async function postData(url, data = {}) {
  * username -> string
  * 
  */
-const verifySig = (data, signature, publicKey) => {
-  data = Buffer.from(data);
-  data = new Uint8Array(data.toJSON().data);
-  signature = new Uint8Array(signature.toJSON().data);
-  publicKey = new Uint8Array(publicKey.toJSON().data);
-  return nacl.sign.detached.verify(data, signature, publicKey);
-};
+
+interface auth{
+  pk:string, //hexString
+  address:string, //stellar address
+  proof:string //signed item 
+}
+function handleAuth(auth:auth, testKey):boolean{
+  function verifySig(data, signature, publicKey):boolean{
+    data = Buffer.from(data);
+    data = new Uint8Array(data.toJSON().data);
+    signature = new Uint8Array(signature.toJSON().data);
+    publicKey = new Uint8Array(publicKey.toJSON().data);
+    return nacl.sign.detached.verify(data, signature, publicKey);
+  };
+  function prepairTest(data:string):Buffer{
+    const safty = Buffer.from("__challenge__", 'hex');
+    //this is done so an evil server couldn't use this function to sign a valid transaction
+  
+    const dataBuf = Buffer.from(data, 'hex');
+    const prepaired = Buffer.concat([safty, dataBuf]);
+    return prepaired;
+  }
+  const test = prepairTest(testKey);
+  return verifySig(test, auth.proof, auth.pk);
+
+}
+
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
     // your server-side functionality
-    const body = JSON.parse(event.body);
-    const test = Buffer.from("createaccount");
-    const proofBuf = Buffer.from(body.proof, 'hex');
-    console.log("test");
-    console.log(test);
-    console.log("sig");
-    console.log(body.proof);
-    console.log("sig buffer");
-    console.log(proofBuf);
-    const proof = body.proof;
+    const body = JSON.parse(event.body as string);
     const address = body.address;
-    const pk = body.pk;
-    console.log("address is");
-    console.log(address);
-    const verifier = verifySig("createaccount", proofBuf, Buffer.from(pk, "hex"));
-    console.log("verifer is");
-    console.log(verifier);
-    console.log("running verifier");
-    if(!verifier){
+
+
+
+    if(!handleAuth(body.auth as auth, 'createaccount')){
         console.log("failed verification");
-        return returnResponse(403, {"error":"proof did not match", "ok":false, "code":403})
+        
+        return new Response(JSON.stringify({"success":false, error:"could not auth"}), {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": 'GET, POST, PUT, DELETE, OPTIONS'
+            },
+          status: 402,
+        });
     }
-    console.log("body username is: ");
-    console.log(body.username);
-    console.log("body.address is: ")
-    console.log(body.address);
+
     const params = {
         "username": body.username,
         "domain": "metastellar.io",
@@ -94,6 +106,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
         },
       status: 200,
     });
+    
     return output;
       
   };
