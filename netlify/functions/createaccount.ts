@@ -62,11 +62,13 @@ function handleAuth(auth:auth, testKey):boolean{
     return nacl.sign.detached.verify(uIntdata, uIntsignature, uIntpublicKey);
   };
   function prepairTest(data:string):Buffer{
-    const safty = Buffer.from("__challenge__", 'hex');
+    const safty = Buffer.from("__challenge__");
     //this is done so an evil server couldn't use this function to sign a valid transaction
   
     const dataBuf = Buffer.from(data, 'hex');
     const prepaired = Buffer.concat([safty, dataBuf]);
+    console.log("prepaired is");
+    console.log(prepaired);
     return prepaired;
   }
   const test = prepairTest(testKey);
