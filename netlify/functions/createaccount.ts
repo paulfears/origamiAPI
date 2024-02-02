@@ -1,5 +1,10 @@
 import {Keypair} from 'stellar-base';
 import { returnResponse } from '../../functionUtils';
+import nacl from 'tweetnacl';
+
+
+
+
 async function postData(url, data = {}) {
     // Default options are marked with *
     console.log("token is");
@@ -37,6 +42,13 @@ async function postData(url, data = {}) {
  * username -> string
  * 
  */
+const verifySig = (data, signature, publicKey) => {
+  data = Buffer.from(data);
+  data = new Uint8Array(data.toJSON().data);
+  signature = new Uint8Array(signature.toJSON().data);
+  publicKey = new Uint8Array(publicKey.toJSON().data);
+  return nacl.sign.detached.verify(data, signature, publicKey);
+};
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
     // your server-side functionality
     const body = JSON.parse(event.body);
@@ -52,11 +64,11 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     const address = body.address;
     console.log("address is");
     console.log(address);
-    const verifier = Keypair.fromPublicKey(address);
+    const verifier = verifySig("createaccount", proofBuf, Buffer.from(address, "hex"))
     console.log("verifer is");
     console.log(verifier);
     console.log("running verifier");
-    if(!verifier.verify(test, proofBuf)){
+    if(!verifier){
         console.log("failed verification");
         return returnResponse(403, {"error":"proof did not match", "ok":false, "code":403})
     }
