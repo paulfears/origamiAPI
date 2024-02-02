@@ -64,7 +64,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     const address = body.address;
     console.log("address is");
     console.log(address);
-    const verifier = verifySig("createaccount", proofBuf, Buffer.from(address, "hex"))
+    const verifier = verifySig("createaccount", proofBuf, Buffer.from(address, "hex"));
     console.log("verifer is");
     console.log(verifier);
     console.log("running verifier");
