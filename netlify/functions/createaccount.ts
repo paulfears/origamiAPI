@@ -1,7 +1,7 @@
 import {Keypair} from 'stellar-base';
 import { returnResponse } from '../../functionUtils';
 import nacl from 'tweetnacl';
-
+ import { Handler, HandlerEvent, HandlerContext } from '@netlify/functions';}
 
 
 
@@ -87,13 +87,15 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     console.log("response is");
     console.log(response);
     const data = response;
-      return {'statusCode': 200,
-          'headers': {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": 'GET, POST, PUT, DELETE, OPTIONS'
-          },
-          'body': JSON.stringify(data)
-      }    
+    let output = new Response(JSON.stringify(data), {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": 'GET, POST, PUT, DELETE, OPTIONS'
+        },
+      status: 200,
+    });
+    return output;
+      
   };
   
   export { handler };
