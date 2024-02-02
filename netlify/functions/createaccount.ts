@@ -61,14 +61,14 @@ function handleAuth(auth:auth, testKey):boolean{
     const uIntdata = new Uint8Array(data.toJSON().data);
     return nacl.sign.detached.verify(uIntdata, uIntsignature, uIntpublicKey);
   };
-  function prepairTest(data:string):Buffer{
-          
-      const safty = Buffer.from("__challenge__").toString('hex');
-      //this is done so an evil server couldn't use this function to sign a valid transaction
-      const prepaired = Buffer.from(safty+data, 'hex');
-      console.log("prepaired is");
-      console.log(prepaired);
-      return prepaired;
+  function  prepairTest(data:string):Buffer{
+        const dataHex = Buffer.from(data).toString('hex');
+        const safty = Buffer.from("__challenge__").toString('hex');
+        //this is done so an evil server couldn't use this function to sign a valid transaction
+        const prepaired = Buffer.from(safty+dataHex, 'hex');
+        console.log("prepaired is");
+        console.log(prepaired);
+        return prepaired;
   }
   const test = prepairTest(testKey);
   console.log("test is");
