@@ -112,17 +112,8 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
         "account_id": body.address,
       }
     const url = "https://stellarid.io/api/addresses/"
-    const response = await postData(url, params)
-    console.log("response is");
-    console.log(response);
-    const data = response;
-    let output = new Response(JSON.stringify(data), {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": 'GET, POST, PUT, DELETE, OPTIONS'
-        },
-      status: 200,
-    });
+    const data = await postData(url, params)
+    let output = Response.json(data)
     
     return output;
       
