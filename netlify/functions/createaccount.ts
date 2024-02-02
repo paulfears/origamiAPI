@@ -30,7 +30,7 @@ async function postData(url, data = {}) {
     console.log(response.status);
     console.log("status text is");
     console.log(response.statusText);
-    const output = await response.text(); // parses JSON response into native JavaScript objects
+    const output = await response.json(); // parses JSON response into native JavaScript objects
     console.log("output is");
     console.log(output);
     return output;
