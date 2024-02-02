@@ -51,11 +51,8 @@ interface auth{
 }
 function handleAuth(auth:auth, testKey):boolean{
   function verifySig(data:Buffer, signature:string, publicKey:string):boolean{
-    console.log("verifying sig");
     const signatureBuf = Buffer.from(signature, 'hex');
     const publicKeyBuf = Buffer.from(publicKey, 'hex');
-    console.log(publicKeyBuf);
-    console.log(signatureBuf);
     const uIntsignature = new Uint8Array(signatureBuf.toJSON().data);
     const uIntpublicKey = new Uint8Array(publicKeyBuf.toJSON().data);
     const uIntdata = new Uint8Array(data.toJSON().data);
@@ -66,32 +63,18 @@ function handleAuth(auth:auth, testKey):boolean{
         const safty = Buffer.from("__challenge__").toString('hex');
         //this is done so an evil server couldn't use this function to sign a valid transaction
         const prepaired = Buffer.from(safty+dataHex, 'hex');
-        console.log("prepaired is");
-        console.log(prepaired);
         return prepaired;
   }
   const test = prepairTest(testKey);
-  console.log("test is");
-  console.log(test);
-  console.log("auth.proof is");
-  console.log(auth.proof);
-  console.log("auth.pk is ");
-  console.log(auth.pk);
+
   return verifySig(test, auth.proof, auth.pk);
 
 }
 
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
     // your server-side functionality
-
-    console.log(event);
-    console.log(event.body);
-    console.log("about to parse body");
     const body = JSON.parse(event.body as string);
-    console.log(body);
     const address = body.address;
-    console.log("address is");
-    console.log(address);
 
 
     if(!handleAuth(body.auth as auth, 'createaccount')){
