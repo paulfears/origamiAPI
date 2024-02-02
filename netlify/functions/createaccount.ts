@@ -1,9 +1,7 @@
 import {Keypair} from 'stellar-base';
 import { returnResponse } from '../../functionUtils';
 import nacl from 'tweetnacl';
-import { Handler, HandlerEvent, HandlerContext } from '@netlify/functions';import { json } from 'stream/consumers';
-
-
+import { Handler, HandlerEvent, HandlerContext } from '@netlify/functions';
 
 
 async function postData(url, data = {}) {
@@ -96,9 +94,10 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
       }
     const url = "https://stellarid.io/api/addresses/"
     const data = await postData(url, params)
-    let output = Response.json(data)
-    
-    return output;
+    return {
+      body: JSON.stringify(data),
+      statusCode: 200,
+    }
       
   };
   
