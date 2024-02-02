@@ -53,7 +53,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     // your server-side functionality
     const body = JSON.parse(event.body);
     const test = Buffer.from("createaccount");
-    const proofBuf = Buffer.from(body.proof);
+    const proofBuf = Buffer.from(body.proof, 'hex');
     console.log("test");
     console.log(test);
     console.log("sig");
