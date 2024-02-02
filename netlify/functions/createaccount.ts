@@ -40,21 +40,23 @@ async function postData(url, data = {}) {
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
     // your server-side functionality
     const body = JSON.parse(event.body);
-    const test = Buffer.from(Buffer.from("createaccount").toString());
+    const test = Buffer.from("createaccount");
+    const proofBuf = Buffer.from(body.proof);
     console.log("test");
     console.log(test);
     console.log("sig");
     console.log(body.proof);
     console.log("sig buffer");
-    console.log(Buffer.from(body.proof));
+    console.log(proofBuf);
     const proof = body.proof;
     const address = body.address;
-    
+    console.log("address is");
+    console.log(address);
     const verifier = Keypair.fromPublicKey(address);
     console.log("verifer is");
     console.log(verifier);
     console.log("running verifier");
-    if(!verifier.verify(test, Buffer.from(proof))){
+    if(!verifier.verify(test, proofBuf)){
         console.log("failed verification");
         return returnResponse(403, {"error":"proof did not match", "ok":false, "code":403})
     }
