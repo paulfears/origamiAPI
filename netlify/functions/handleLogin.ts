@@ -16,7 +16,8 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     console.log("event body is");
     console.log(event.body);
     const data = new URLSearchParams(event.body);
-    
+    let credentials = decodeJwtResponse(data.get('credential'));
+    console.log(credentials);
     console.log("here");
     const json_data = {
       "hello":"world",
