@@ -70,14 +70,14 @@ function handleAuth(auth:auth, testKey):boolean{
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
     // your server-side functionality
    
-
+    const endpoint = event.path.slice("/.netlify/functions/stellarAPI/".length)
     const data = "hello world"+event['path'];
     return {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": 'GET, POST, PUT, DELETE, OPTIONS'
         },
-      body: JSON.stringify(data),
+      body: JSON.stringify(endpoint),
       statusCode: 200,
     }
       
