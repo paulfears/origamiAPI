@@ -79,6 +79,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     console.log(initHeaders);
     initHeaders.splice(2, 1);
     console.log(initHeaders);
+    console.log(event.body);
     const response = await fetch("https://autumn-proportionate-breeze.stellar-mainnet.quiknode.pro/"+endpoint, {
         headers:initHeaders,
         method:method,
