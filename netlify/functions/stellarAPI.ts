@@ -87,7 +87,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
         return {
             statusCode: 200,
             headers: {
-                "Access-Control-Allow-Origin": "https://metastellar.io",
+                "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Headers": "*",
                 "Access-Control-Allow-Methods": 'GET, POST, PUT, DELETE, OPTIONS'
             },
@@ -104,7 +104,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     console.log(responseJson);
     return {
         headers: {
-            "Access-Control-Allow-Origin": "https://metastellar.io",
+            "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*",
             "Access-Control-Allow-Methods": 'GET, POST, PUT, DELETE, OPTIONS'
         },
