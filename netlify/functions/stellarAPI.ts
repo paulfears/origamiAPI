@@ -1,6 +1,6 @@
 import nacl from 'tweetnacl';
 import { Handler, HandlerEvent, HandlerContext } from '@netlify/functions';
-
+import * as StellarSdk from '@stellar/stellar-sdk';
 
 async function postData(url, data = {}) {
     // Default options are marked with *
@@ -72,12 +72,18 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
    
     const endpoint = event.path.slice("/.netlify/functions/stellarAPI/".length)
     const data = "hello world"+event['path'];
+    const method = event.httpMethod;
+    const response = await fetch("https://autumn-proportionate-breeze.stellar-mainnet.quiknode.pro/"+endpoint, {
+        method:method,
+        body:event.body
+    })
+    const responseJson = await response.json();
     return {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": 'GET, POST, PUT, DELETE, OPTIONS'
         },
-      body: JSON.stringify(endpoint),
+      body: JSON.stringify(responseJson),
       statusCode: 200,
     }
       
