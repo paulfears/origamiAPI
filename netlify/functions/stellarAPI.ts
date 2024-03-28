@@ -76,6 +76,20 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
         method:method,
         body:event.body
     })
+    
+    if (event.httpMethod == "OPTIONS") {
+        console.log("IF OPTIONS");
+
+        return {
+            statusCode: 200,
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Methods": 'GET, POST, PUT, DELETE, OPTIONS'
+            },
+        };
+        }
+    
     console.log(response);
     const responseJson = await response.json();
     console.log(responseJson);
