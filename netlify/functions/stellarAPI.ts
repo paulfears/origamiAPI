@@ -71,13 +71,14 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     // your server-side functionality
    
     const endpoint = event.path.slice("/.netlify/functions/stellarAPI/".length)
-    const data = "hello world"+event['path'];
     const method = event.httpMethod;
     const response = await fetch("https://autumn-proportionate-breeze.stellar-mainnet.quiknode.pro/"+endpoint, {
         method:method,
         body:event.body
     })
+    console.log(response);
     const responseJson = await response.json();
+    console.log(responseJson);
     return {
       headers: {
         "Access-Control-Allow-Origin": "*",
