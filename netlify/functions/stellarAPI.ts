@@ -77,6 +77,8 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
         initHeaders.push([header, (event.headers[header] as string)]);
     }
     console.log(initHeaders);
+    initHeaders.splice(2, 1);
+    console.log(initHeaders);
     const response = await fetch("https://autumn-proportionate-breeze.stellar-mainnet.quiknode.pro/"+endpoint, {
         headers:initHeaders,
         method:method,
