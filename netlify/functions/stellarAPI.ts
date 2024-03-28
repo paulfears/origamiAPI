@@ -72,7 +72,12 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
    
     const endpoint = event.path.slice("/.netlify/functions/stellarAPI/".length)
     const method = event.httpMethod;
+    let initHeaders:HeadersInit = [];
+    for(let header in event.headers){
+        initHeaders.push([header, (event.headers[header] as string)]);
+    }
     const response = await fetch("https://autumn-proportionate-breeze.stellar-mainnet.quiknode.pro/"+endpoint, {
+        headers:initHeaders,
         method:method,
         body:event.body
     })
