@@ -82,6 +82,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
         body:event.body
     })
     
+    
     if (event.httpMethod == "OPTIONS") {
         console.log("IF OPTIONS");
 
@@ -99,10 +100,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     const responseJson = await response.json();
     console.log(responseJson);
     return {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": 'GET, POST, PUT, DELETE, OPTIONS'
-        },
+      headers: response.headers,
       body: JSON.stringify(responseJson),
       statusCode: 200,
     }
